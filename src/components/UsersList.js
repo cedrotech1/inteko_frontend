@@ -83,7 +83,7 @@ const UsersList = () => {
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>Address</th>
+            {/* <th>Address</th> */}
             <th>Status</th>
             <th>Role</th>
             <th>Actions</th>
@@ -104,7 +104,7 @@ const UsersList = () => {
               <td>{user.firstname} {user.lastname}</td>
               <td>{user.email}</td>
               <td>{user.phone}</td>
-              <td>{user.address}</td>
+              {/* <td>{user.address}</td> */}
               <td>{user.status}</td>
               <td>{user.role}</td>
               <td>

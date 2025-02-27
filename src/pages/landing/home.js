@@ -111,8 +111,8 @@ const PostsList = () => {
         body: JSON.stringify({
           postID: currentPostId,
           comment: newComment,
-          name:newName,
-          address:newAddress,
+          name: newName,
+          address: newAddress,
         }),
       })
         .then((response) => response.json())
@@ -137,27 +137,27 @@ const PostsList = () => {
           <div className="row gy-5" data-aos="fade-in">
             <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
               <h2 style={{ fontSize: '45px', marginBottom: '1cm', marginTop: '-1cm', fontFamily: 'monospace' }}>
-                Welcome to Inteko Yabaturage  
+                Welcome to Inteko Yabaturage
               </h2>
               <p style={{ marginBottom: '1cm', marginTop: '0cm', fontStyle: 'bold', fontFamily: 'monospace' }}>
-                You can add your idea in the comment section! <br/>
+                You can add your idea in the comment section! <br />
                 Just click on post and write your idea!
               </p>
               <div className="d-flex justify-content-center justify-content-lg-start">
-                <a href="" className="btn-get-started" style={{ backgroundColor: 'lightblue',color:'white', borderRadius: '6px', fontFamily: 'monospace' }}>
+                <a href="" className="btn-get-started" style={{ backgroundColor: 'lightblue', color: 'white', borderRadius: '6px', fontFamily: 'monospace' }}>
                   Get Started
                 </a>
                 <a
                   href="/login"
                   className="glightbox btn-watch-video d-flex align-items-center"
-                  style={{ backgroundColor: 'whitesmoke',border:'1px solid lightblue', borderRadius: '6px', width: '3.5cm', textAlign: 'center', fontFamily: 'monospace' }}
+                  style={{ backgroundColor: 'whitesmoke', border: '1px solid lightblue', borderRadius: '6px', width: '3.5cm', textAlign: 'center', fontFamily: 'monospace' }}
                 >
                   &nbsp;  &nbsp; login
                 </a>
               </div>
             </div>
             <div className="col-lg-6 order-1 order-lg-2">
-              <img src={Image}  className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100" style={{borderRadius:'0.3cm'}} />
+              <img src={Image} className="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100" style={{ borderRadius: '0.3cm' }} />
             </div>
           </div>
         </div>
@@ -191,7 +191,7 @@ const PostsList = () => {
 
       {/* Posts Display */}
       {loading ? (
-        <p className="text-center text-muted" style={{padding:'2cm'}}><LoadingSpinner/></p>
+        <p className="text-center text-muted" style={{ padding: '2cm' }}><LoadingSpinner /></p>
       ) : currentPosts.length > 0 ? (
         <div className="row">
           {currentPosts.map((post) => (
@@ -241,9 +241,9 @@ const PostsList = () => {
           {comments.length > 0 ? (
             <p>
               {comments.map((comment, index) => (
-                <p style={{padding:'20px',backgroundColor:'whitesmoke'}}
-                key={index}>comment:{comment.address} <br/> name:({comment.comment}) from {comment.name}
-                
+                <p style={{ padding: '20px', backgroundColor: 'whitesmoke' }}
+                  key={index}>comment:{comment.address} <br /> name:({comment.comment}) from {comment.name}
+
                 </p>
               ))}
             </p>
@@ -252,29 +252,29 @@ const PostsList = () => {
           )}
           <hr />
           <div className="mb-3">
-  <div className="d-flex gap-2">
-    <input
-      value={newName}
-      onChange={(e) => setNewName(e.target.value)}
-      placeholder="Your Name"
-      className="form-control"
-    />
-    <input
-      value={newAddress}
-      onChange={(e) => setNewAddress(e.target.value)}
-      placeholder="Your Address"
-      className="form-control"
-    />
-  </div>
-  <textarea
-    value={newComment}
-    onChange={(e) => setNewComment(e.target.value)}
-    placeholder="Add a comment..."
-    className="form-control my-2"
-    rows="2"
-  />
-  <button onClick={handleAddComment} className="btn btn-primary w-100">Submit</button>
-</div>
+            <div className="d-flex gap-2">
+              <input
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                placeholder="Your Name"
+                className="form-control"
+              />
+              <input
+                value={newAddress}
+                onChange={(e) => setNewAddress(e.target.value)}
+                placeholder="Your Address"
+                className="form-control"
+              />
+            </div>
+            <textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Add a comment..."
+              className="form-control my-2"
+              rows="2"
+            />
+            <button onClick={handleAddComment} className="btn btn-primary w-100">Submit</button>
+          </div>
 
 
         </Modal.Body>

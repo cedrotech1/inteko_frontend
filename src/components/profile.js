@@ -13,7 +13,7 @@ const LandingPage = () => {
         email: '',
         phone: '',
         gender: '',
-        address: '',
+    
     });
     const [loading, setLoading] = useState(true);
 
@@ -66,7 +66,6 @@ const LandingPage = () => {
                 email: parsedUser.email || '',
                 phone: parsedUser.phone || '',
                 gender: parsedUser.gender || '',
-                address: parsedUser.address || '',
                 image: parsedUser.image || '',
             });
             setLoading(false);
@@ -244,15 +243,7 @@ const LandingPage = () => {
                                       
                                     </div>
                                 </div>
-                                <div className="info-item d-flex" style={{ backgroundColor: 'whitesmoke', color: 'black' }}>
-                                    <i className="bi bi-envelope flex-shrink-0" style={{ backgroundColor: 'white' }}>
-                                        <BiMap className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} />
-                                    </i>
-                                    <div>
-                                        <h4>Location:</h4>
-                                        <p>{formData.address}</p>
-                                    </div>
-                                </div>
+                             
 
                                 <div className="info-item d-flex" style={{ backgroundColor: 'whitesmoke', color: 'black' }}>
                                     <i className="bi bi-envelope flex-shrink-0" style={{ backgroundColor: 'white' }}><BiEnvelope className="flex-shrink-0 bi bi-envelope flex-shrink-0" style={{ color: 'black' }} /></i>
@@ -298,10 +289,7 @@ const LandingPage = () => {
                                         <span>Gender</span>
                                         <input type="text" name="gender" className="form-control" id="gender" value={formData.gender} onChange={handleChange} />
                                     </div>
-                                    <div className="col-md-6 form-group mt-3 mt-md-0">
-                                        <span>Address</span>
-                                        <input type="text" className="form-control" name="address" id="address" value={formData.address} onChange={handleChange} />
-                                    </div>
+                                  
                                 </div>
                                 <div className="d-flex justify-content-between">
                                     <button type="submit" className="form-control" style={{ border: '1px solid green', backgroundColor: 'lightblue', color: 'green',margonTop:'0cm',borderRadius:'0.1cm' }} disabled={loading}>

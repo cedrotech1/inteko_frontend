@@ -7,7 +7,7 @@ const AddUser = () => {
     email: "",
     phone: "",
     role: "",
-    gender: "",
+    gender: "Male",
     address: "",
     province_id: "",
     district_id: "",
@@ -22,7 +22,7 @@ const AddUser = () => {
   const [sectors, setSectors] = useState([]);
   const [cells, setCells] = useState([]);
   const [villages, setVillages] = useState([]);
-  let token=localStorage.getItem('token');
+  let token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchAddressData = async () => {
@@ -119,25 +119,33 @@ const AddUser = () => {
           <input type="text" name="phone" className="form-control" placeholder="Phone" onChange={handleChange} required />
         </div>
         <div className="col-md-6">
-  <select
-    name="role"
-    className="form-select"
-    onChange={handleChange}
-    required
-  >
-    <option value="">Select Role</option>
-    <option value="province_leader">Province Leader</option>
-    <option value="district_leader">District Leader</option>
-    <option value="sector_leader">Sector Leader</option>
-    <option value="cell_leader">Cell Leader</option>
-    <option value="village_leader">Village Leader</option>
-    <option value="admin">Admin</option>
-  </select>
-</div>
+          <select
+            name="role"
+            className="form-select"
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Role</option>
+            <option value="province_leader">Province Leader</option>
+            <option value="district_leader">District Leader</option>
+            <option value="sector_leader">Sector Leader</option>
+            <option value="cell_leader">Cell Leader</option>
+            <option value="village_leader">Village Leader</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
 
 
         <div className="col-md-6">
-          <input type="text" name="gender" className="form-control" placeholder="Gender" onChange={handleChange} required />
+        <label>
+          Select Gender:
+          <select required className="form-control" onChange={handleChange}>
+            <option value="" disabled>-- Select --</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
         </div>
 
         {/* Address dropdowns */}

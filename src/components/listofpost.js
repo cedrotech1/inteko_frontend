@@ -152,6 +152,9 @@ const PostList = () => {
                   >
                     {actionLoading[`${post.id}-delete`] ? <Spinner size="sm" animation="border" /> : 'Delete'}
                   </Button>
+                   <Button variant="primary" size="sm"  href={`/post/${post.id}`}>
+                                    Read More
+                                  </Button>
                 </td>
               </tr>
             ))}

@@ -1,69 +1,71 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import Header from './components/header';
+import Sidebar from './components/aside';
+import Home from './pages/admin/home';
+import Users from './pages/admin/users';
+import Login from './components/login';
+import Reset from './components/reset';
+import Code from './components/code';
+import ResetPassword from './components/ResetPassword';
+import OneUser from './pages/admin/oneUser'; 
+import Profile from './pages/admin/profile'; 
+import Logout from './pages/admin/logout'; 
+import AddLeader from './pages/admin/addLeaders';
+import PostType from './pages/admin/PostManagement'; 
+import Notification from './components/Notification_Page';
+import AddCitizen from './pages/admin/addCitizen';
+import PostCitizen from './pages/admin/citizenPostsPage';
+import Post from './pages/admin/Post'; 
+import PostView from './pages/admin/PostViewPage'; 
+import Statistics from './pages/admin/statisticsPage'; 
+import './components/style.css';
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+const MainLayout = () => {
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login' || location.pathname === '/reset' || location.pathname.startsWith('/code/') || location.pathname.startsWith('/resetPassword/');
 
-// Importing components from the landing pages
-import Home from "./pages/landing/home";
-import Login from "./pages/landing/login";
-import NotFound from './pages/landing/notfound';
-import Logout from './pages/landing/logout';
-import Statistics1 from './components/statistics';
+  return (
+    <div className="App">
+      {!isLoginPage && <Header />}
+      {!isLoginPage && <Sidebar />}
+      <div className={`content-wrapper ${isLoginPage ? 'login-page' : ''}`}>
+        <Routes>
+          
+          <Route path="/users" element={<Users />} />
+          <Route path="/oneUser/:id" element={<OneUser />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/addusers" element={<AddLeader />} />
+          <Route path="/post_type" element={<PostType />} />
+          <Route path="/notifications" element={<Notification />} />
+          <Route path="/post" element={<Post />} />
+          <Route path="/addcitizen" element={<AddCitizen />} />
+          <Route path="/citizenpost" element={<PostCitizen />} />
+          <Route path="/statistics" element={<Statistics />} />
+          <Route path="/post/:id"  element={<PostView />} />
+        </Routes>
+      </div>
+    </div>
+  );
+};
 
-
-
-
-// Importing components from the Admin resto pages
-import Dasha from "./pages/Admin/homePage";
-import Statisticsa from "./pages/Admin/statistics";
-import Setting from "./pages/Admin/user-profile";
-import OurCate from "./pages/Admin/categoryPage";
-
-
-
-
-
-import Notifications from "./pages/Admin/notifications";
-import OtherProfile from "./pages/Admin/other_user-profile";
-
-import Forgot from "./pages/landing/reset";
-import Code from "./pages/landing/code";
-import ResetPassword from "./pages/landing/resetPassword";
-import PostPage from "./pages/Admin/postPage";
-
-
-
-
-
-// Main App component
 function App() {
   return (
-    // Set up the BrowserRouter for handling routes
-    <BrowserRouter>
-      {/* Define the routes using the Routes component */}
+    <Router>
       <Routes>
-        {/* Landing Pages */}
-        <Route path="/" element={<Home />} exact={true} />
-        <Route path="/login" element={<Login />} exact={true} />
-        <Route path="/logout" element={<Logout />} exact={true} />
-        <Route path="/Statistics1" element={<Statistics1 />} exact={true} />
-        <Route path="/forgot" element={<Forgot />} exact={true} />
-        <Route path="/code/:email" element={<Code/>} exact={true} />
-        <Route path="/resetPassword/:email" element={<ResetPassword/>} exact={true} />
-        <Route path="*" element={<NotFound />} />
+        {/* Login Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/reset" element={<Reset />} />
+        <Route path="/code/:email" element={<Code />} />
+        <Route path="/resetPassword/:email" element={<ResetPassword />} />
+        <Route path="/" element={<Home />} />
 
-        {/* Admin Resto Pages */}
-        <Route path="/dashboard" element={<Dasha />} exact={true} />
-        <Route path="/dashboard" element={<Statisticsa />} exact={true} />
-        <Route path="/settings" element={<Setting />} exact={true} />
-        <Route path="/categories" element={<OurCate/>} exact={true} />
-
-
-       
-        <Route path="/notifications" element={<Notifications/>} exact={true} />
-        <Route path="/post" element={<PostPage/>} exact={true} />
+        {/* Main Layout Routes */}
+        <Route path="/*" element={<MainLayout />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
-// Export the App component as the default export    OurResto
 export default App;

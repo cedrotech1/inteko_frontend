@@ -1,213 +1,88 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
   const navigate = useNavigate();
-  const [role, setRole] = useState(null); // Initialize role state
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      // navigate('/Login');
-    }
-  }, [navigate]);
-
-  useEffect(() => {
-    const userString = localStorage.getItem('user');
+    const userString = localStorage.getItem("user");
     if (userString) {
       try {
         const user = JSON.parse(userString);
-        setRole(user.role); // Set role state based on user object
+        setRole(user.role);
       } catch (error) {
-        console.error('Error parsing user object:', error);
+        console.error("Error parsing user object:", error);
       }
-    } else {
-      console.error('User object not found in local storage');
     }
   }, []);
+
+  // Common menu items
+  const commonItems = [
+    { label: "Settings", icon: "bi-gear", link: "../profile" },
+    { label: "Logout", icon: "bi-box-arrow-right", link: "../logout" },
+  ];
+
+  // Role-based menu items
+  const menuItems = {
+    admin: [
+      { label: "Dashboard", icon: "bi-bar-chart", link: "/statistics" },
+      { label: "Add Leaders Users", icon: "bi-person-plus", link: "../addusers" },
+      { label: "List of Leaders", icon: "bi-person-lines-fill", link: "../users" },
+      { label: "Manage Post Types", icon: "bi-tags", link: "../post_type" },
+      { label: "Notifications", icon: "bi-bell", link: "../notifications" },
+    ],
+    province_leader: [
+      { label: "View Posts", icon: "bi-file-earmark-text", link: "../post" },
+      { label: "Notifications", icon: "bi-bell", link: "../notifications" },
+    ],
+    district_leader: [
+      { label: "View Posts", icon: "bi-file-earmark-text", link: "../post" },
+      { label: "Notifications", icon: "bi-bell", link: "../notifications" },
+    ],
+    sector_leader: [
+      { label: "View Posts", icon: "bi-file-earmark-text", link: "../post" },
+      { label: "Notifications", icon: "bi-bell", link: "../notifications" },
+    ],
+    cell_leader: [
+      { label: "View Posts", icon: "bi-file-earmark-text", link: "../post" },
+      { label: "Notifications", icon: "bi-bell", link: "../notifications" },
+    ],
+    village_leader: [
+      { label: "Add Post", icon: "bi-pencil-square", link: "../addpost" },
+      { label: "View Posts", icon: "bi-file-earmark-text", link: "../post" },
+      { label: "View Village Citizens", icon: "bi-person-badge", link: "../users" },
+    ],
+    citizen: [
+      { label: "View Posts", icon: "bi-file-earmark-text", link: "../citizenpost" },
+      { label: "Penalties (Fines)", icon: "bi-exclamation-circle", link: "../penarite" },
+      { label: "Notifications", icon: "bi-bell", link: "../notifications" },
+    ],
+  };
 
   return (
     <aside id="sidebar" className="sidebar">
       <ul className="sidebar-nav" id="sidebar-nav">
-        <li className="nav-item">
-          <a className="nav-link collapsed" href="/statistics">
-            <i className="bi bi-grid"></i>
-            <span>Dashboard</span>
-          </a>
-        </li>
+        {/* Role-based Menu Items */}
+        {role &&
+          menuItems[role]?.map((item, index) => (
+            <li className="nav-item" key={index}>
+              <a className="nav-link collapsed" href={item.link}>
+                <i className={`bi ${item.icon}`}></i>
+                <span>{item.label}</span>
+              </a>
+            </li>
+          ))}
 
-        {/* Render items based on user role */}
- {role === 'admin' && (
-  <React.Fragment>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../addusers">
-        <i className="bi bi-person"></i>
-        <span>Add Leaders Users</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../users">
-        <i className="bi bi-person"></i>
-        <span>List of Leaders</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../post_type">
-        <i className="bi bi-person"></i>
-        <span>Manage post type</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../notifications">
-        <i className="bi bi-person"></i>
-        <span>Notifications</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../profile">
-        <i className="bi bi-gear"></i>
-        <span>Settings</span>
-      </a>
-    </li>
-  </React.Fragment>
-)}
-
-{role === 'province_leader' && (
-  <React.Fragment>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../post">
-        <i className="bi bi-person-circle"></i>
-        <span>Add post</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../notifications">
-        <i className="bi bi-person"></i>
-        <span>Notifications</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../profile">
-        <i className="bi bi-gear"></i>
-        <span>Settings</span>
-      </a>
-    </li>
-  
-  </React.Fragment>
-)}
-
-{role === 'district_leader' && (
-  <React.Fragment>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../post">
-        <i className="bi bi-person-circle"></i>
-        <span>Add post</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../notifications">
-        <i className="bi bi-person"></i>
-        <span>Notifications</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../profile">
-        <i className="bi bi-gear"></i>
-        <span>Settings</span>
-      </a>
-    </li>
-  </React.Fragment>
-)}
-
-{role === 'sector_leader' && (
-  <React.Fragment>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../post">
-        <i className="bi bi-person-circle"></i>
-        <span>Add post</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../notifications">
-        <i className="bi bi-person"></i>
-        <span>Notifications</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../profile">
-        <i className="bi bi-gear"></i>
-        <span>Settings</span>
-      </a>
-    </li>
-  </React.Fragment>
-)}
-
-{role === 'cell_leader' && (
-  <React.Fragment>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../post">
-        <i className="bi bi-person-circle"></i>
-        <span>Add post</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../notifications">
-        <i className="bi bi-person"></i>
-        <span>Notifications</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../profile">
-        <i className="bi bi-gear"></i>
-        <span>Settings</span>
-      </a>
-    </li>
-  </React.Fragment>
-)}
-
-{role === 'village_leader' && (
-  <React.Fragment>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../post">
-        <i className="bi bi-person-circle"></i>
-        <span>Add post</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../addcitizen">
-        <i className="bi bi-journal-text"></i>
-        <span>Add citizen</span>
-      </a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../users">
-        <i className="bi bi-journal-text"></i>
-        <span>View Village citizens</span>
-      </a>
-    </li>
-  </React.Fragment>
-)}
-
-{role === 'citizen' && (
-  <React.Fragment>
-    <li className="nav-item">
-      <a className="nav-link collapsed" href="../citizenpost">
-        <i className="bi bi-person-circle"></i>
-        <span>View posts</span>
-      </a>
-    </li>
-  </React.Fragment>
-)}
-
-
-
-
-        <li className="nav-item">
-          <a className="nav-link collapsed" href="../logout">
-            <i className="bi bi-box-arrow-right"></i>
-            <span>Logout</span>
-          </a>
-        </li>
+        {/* Common Items */}
+        {commonItems.map((item, index) => (
+          <li className="nav-item" key={index}>
+            <a className="nav-link collapsed" href={item.link}>
+              <i className={`bi ${item.icon}`}></i>
+              <span>{item.label}</span>
+            </a>
+          </li>
+        ))}
       </ul>
     </aside>
   );

@@ -48,27 +48,27 @@ function Sidebar() {
         } 
         
         else if (role === 'province_leader') {
-          await navigate('../statistics');
+          await navigate('../profile');
         } 
         
         else if (role === 'district_leader') {
-          await navigate('../statistics');
+          await navigate('../profile');
         } 
         
         else if (role === 'sector_leader') {
-          await navigate('../statistics');
+          await navigate('../profile');
         } 
         
         else if (role === 'cell_leader') {
-          await navigate('../statistics');
+          await navigate('../profile');
         } 
         
         else if (role === 'village_leader') {
-          await navigate('../statistics');
+          await navigate('../profile');
         } 
         
         else if (role === 'citizen') {
-          await navigate('../statistics');
+          await navigate('../profile');
         }
         
        
@@ -136,6 +136,9 @@ function Sidebar() {
                  
                     <button  type="submit" className={`btn btn-primary d-block w-100 ${loading ? 'loading' : ''}`} disabled={loading}>
               {loading ? 'loading....': 'login'}</button>
+                  </div>
+                  <div class="col-12">
+                    <a href='./signup'> <label class="form-check-label"  for="rememberMe">Signup</label></a>
                   </div>
                 
                 </form>

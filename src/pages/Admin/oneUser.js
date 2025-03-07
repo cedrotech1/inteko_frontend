@@ -73,8 +73,8 @@ function Home() {
     }
   };
 
-  const handleUpdate = (userId) => {
-    navigate(`/updateUser/${userId}`);
+  const handleUser = (userId) => {
+    navigate(`../penarity/${userId}`);
   };
 
   if (loading) {
@@ -105,12 +105,15 @@ function Home() {
                     <>
                       <p><strong>First Name:</strong> {user.firstname}</p>
                       <p><strong>Last Name:</strong> {user.lastname}</p>
+                      <p><strong>National ID:</strong> {user.nid}</p>
+                      <p><strong>Family info:</strong> {user.familyinfo}</p>
+                      <p><strong>Phone:</strong> {user.phone}</p>
                       <p><strong>Email:</strong> {user.email}</p>
                       <p><strong>Phone:</strong> {user.phone}</p>
                       <p><strong>Created At:</strong> {new Date(user.createdAt).toLocaleString()}</p>
                       <p><strong>Updated At:</strong> {new Date(user.updatedAt).toLocaleString()}</p>
                       <button className='btn btn-outline-danger m-2' onClick={() => handleDelete(user.id)}>Delete User</button>
-                      {/* <button className='btn btn-outline-success' onClick={() => handleUpdate(user.id)}>Edit User</button> */}
+                      <button className='btn btn-outline-success' onClick={() => handleUser(user.id)}>User penalities</button>
                     </>
                   )}
                 </div>

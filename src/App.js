@@ -5,6 +5,7 @@ import Sidebar from './components/aside';
 import Home from './pages/admin/home';
 import Users from './pages/admin/users';
 import Login from './components/login';
+import SignUP from './components/Signup';
 import Reset from './components/reset';
 import Code from './components/code';
 import ResetPassword from './components/ResetPassword';
@@ -15,10 +16,17 @@ import AddLeader from './pages/admin/addLeaders';
 import PostType from './pages/admin/PostManagement'; 
 import Notification from './components/Notification_Page';
 import AddCitizen from './pages/admin/addCitizen';
-import PostCitizen from './pages/admin/citizenPostsPage';
+import PostCitizen from './pages/admin/citizenPostPages';
 import Post from './pages/admin/Post'; 
 import PostView from './pages/admin/PostViewPage'; 
-import Statistics from './pages/admin/statisticsPage'; 
+import Statistics from './pages/admin/statisticsPage';
+import Penarite from './pages/admin/PenarityPage'
+import PenariteUser from './pages/admin/UserPenarityPage'
+import AddPost from './pages/admin/AddPostPage'
+
+
+
+import Attandance from './pages/admin/AttandancePage'; 
 import './components/style.css';
 
 const MainLayout = () => {
@@ -44,6 +52,11 @@ const MainLayout = () => {
           <Route path="/citizenpost" element={<PostCitizen />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/post/:id"  element={<PostView />} />
+          <Route path="/penarite"  element={<Penarite />} />
+          <Route path="/penarity/:userID"  element={<PenariteUser />} />
+          <Route path="/addpost"  element={<AddPost />} />
+          <Route path="/attendance/:postID"  element={<Attandance />} />
+    
         </Routes>
       </div>
     </div>
@@ -57,6 +70,7 @@ function App() {
         {/* Login Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/reset" element={<Reset />} />
+        <Route path="/signup" element={<SignUP />} />
         <Route path="/code/:email" element={<Code />} />
         <Route path="/resetPassword/:email" element={<ResetPassword />} />
         <Route path="/" element={<Home />} />

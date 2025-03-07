@@ -2,107 +2,12 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoadingSpinner from '../../components/loading'; // Import the LoadingSpinner component
 import Image from './home.jpeg';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+
 
 const PostsList = () => {
-  const [posts, setPosts] = useState([]);
-  const [filteredPosts, setFilteredPosts] = useState([]);
-  const [addressHierarchy, setAddressHierarchy] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedProvince, setSelectedProvince] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [selectedSector, setSelectedSector] = useState("");
-  const [selectedCell, setSelectedCell] = useState("");
-  const [selectedVillage, setSelectedVillage] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 3;
-
-  // For Modal
-  const [showModal, setShowModal] = useState(false);
-  const [postDetails, setPostDetails] = useState(null);
-  const [comments, setComments] = useState([]);
-
-  const [newComment, setNewComment] = useState("");
-  const [newName, setNewName] = useState("");
-  const [newAddress, setNewAddress] = useState("");
-
-
-
-  const [currentPostId, setCurrentPostId] = useState(null);
-
-  // Fetch posts
-  const fetchPosts = () => {
-    setLoading(true);
-    fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/post/`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success && Array.isArray(data.data)) {
-          setPosts(data.data);
-        } else {
-          console.error("Unexpected response format:", data);
-        }
-      })
-      .catch((error) => console.error("Error fetching posts:", error))
-      .finally(() => setLoading(false));
-  };
-
-  useEffect(fetchPosts, []);
-
-  // Fetch address hierarchy only once
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/address`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success && Array.isArray(data.data)) {
-          setAddressHierarchy(data.data);
-        } else {
-          console.error("Unexpected response format:", data);
-        }
-      })
-      .catch((error) => console.error("Error fetching addresses:", error));
-  }, []);
-
-  // Fetch post details and comments
-  useEffect(() => {
-    if (currentPostId) {
-      fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/post/one/${currentPostId}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            setPostDetails(data.data);
-            setComments(data.data.comments); // assuming comments are in data.data.comments
-          } else {
-            console.error("Error fetching post details:", data);
-          }
-        })
-        .catch((error) => console.error("Error fetching post details:", error));
-    }
-  }, [currentPostId]);
-
-  // Handle filters without resetting on reload
-  useEffect(() => {
-    let filtered = posts;
-    if (selectedProvince) filtered = filtered.filter((post) => post.province_id === Number(selectedProvince));
-    if (selectedDistrict) filtered = filtered.filter((post) => post.district_id === Number(selectedDistrict));
-    if (selectedSector) filtered = filtered.filter((post) => post.sector_id === Number(selectedSector));
-    if (selectedCell) filtered = filtered.filter((post) => post.cell_id === Number(selectedCell));
-    if (selectedVillage) filtered = filtered.filter((post) => post.village_id === Number(selectedVillage));
-
-    setFilteredPosts(filtered);
-    setCurrentPage(1);
-  }, [selectedProvince, selectedDistrict, selectedSector, selectedCell, selectedVillage, posts]);
-
-  // Pagination
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-
-
 
   return (
-    <div className="container mt-4">
+    <div className="container" style={{marginTop:'2cm'}}>
       <section id="hero" className="hero">
         <div className="container position-relative">
           <div className="row gy-5" data-aos="fade-in">
@@ -111,11 +16,11 @@ const PostsList = () => {
                 Welcome to Inteko Yabaturage
               </h2>
               <p style={{ marginBottom: '1cm', marginTop: '0cm', fontStyle: 'bold', fontFamily: 'monospace' }}>
-                You can add your idea in the comment section! <br />
-                Just click on post and write your idea!
+                click on get started to register in system ! <br/>
+                or if you have account click login ! 
               </p>
               <div className="d-flex justify-content-center justify-content-lg-start">
-                <a href="" className="btn-get-started" style={{ backgroundColor: 'lightblue', color: 'white', borderRadius: '6px', fontFamily: 'monospace', padding:'0.2cm',marginRight:'0.2cm'}}>
+                <a href="/signup" className="btn-get-started" style={{ backgroundColor: 'lightblue', color: 'white', borderRadius: '6px', fontFamily: 'monospace', padding: '0.2cm', marginRight: '0.2cm' }}>
                   Get Started
                 </a>
                 <a
@@ -133,72 +38,6 @@ const PostsList = () => {
           </div>
         </div>
       </section>
-
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>📌 Posts</h2>
-        <button className="btn btn-primary" onClick={() => window.location.reload()}>
-          🔄 Reload
-        </button>
-      </div>
-
-      <div className="row mb-3">
-        {[
-          { label: "Province", value: selectedProvince, setter: setSelectedProvince, options: addressHierarchy },
-          { label: "District", value: selectedDistrict, setter: setSelectedDistrict, options: selectedProvince ? addressHierarchy.find(p => p.id === Number(selectedProvince))?.districts || [] : [] },
-          { label: "Sector", value: selectedSector, setter: setSelectedSector, options: selectedDistrict ? addressHierarchy.find(p => p.id === Number(selectedProvince))?.districts.find(d => d.id === Number(selectedDistrict))?.sectors || [] : [] },
-          { label: "Cell", value: selectedCell, setter: setSelectedCell, options: selectedSector ? addressHierarchy.find(p => p.id === Number(selectedProvince))?.districts.find(d => d.id === Number(selectedDistrict))?.sectors.find(s => s.id === Number(selectedSector))?.cells || [] : [] },
-          { label: "Village", value: selectedVillage, setter: setSelectedVillage, options: selectedCell ? addressHierarchy.find(p => p.id === Number(selectedProvince))?.districts.find(d => d.id === Number(selectedDistrict))?.sectors.find(s => s.id === Number(selectedSector))?.cells.find(c => c.id === Number(selectedCell))?.villages || [] : [] }
-        ].map(({ label, value, setter, options }, index) => (
-          <div className="col-md-2" key={index}>
-            <select className="form-control" value={value} onChange={(e) => setter(e.target.value)} disabled={!options.length}>
-              <option value="">{`Select ${label}`}</option>
-              {options.map(option => <option key={option.id} value={option.id}>{option.name}</option>)}
-            </select>
-          </div>
-        ))}
-      </div>
-
-
-
-      {/* Posts Display */}
-      {loading ? (
-        <p className="text-center text-muted" style={{ padding: '2cm' }}><LoadingSpinner /></p>
-      ) : currentPosts.length > 0 ? (
-        <div className="row">
-          {currentPosts.map((post) => (
-            <div key={post.id} className="col-md-4">
-              <div className="card border-primary shadow-sm mb-4" onClick={() => { setCurrentPostId(post.id); setShowModal(true); }}>
-                <div className="card-body">
-                  <h5 className="card-title text-primary">{post.title}</h5>
-                  <p className="card-text">{post.description}</p>
-                  <small className="text-muted">📅 {new Date(post.createdAt).toLocaleString()}</small>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-center text-muted">No posts available 📭</p>
-      )}
-
-      {/* Pagination */}
-      <div className="d-flex justify-content-center mt-4">
-        <nav>
-          <ul className="pagination">
-            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-              <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)}>Previous</button>
-            </li>
-            {[...Array(totalPages)].map((_, i) => (
-              <li className={`page-item ${i + 1 === currentPage ? 'active' : ''}`} key={i}>
-                <button className="page-link" onClick={() => setCurrentPage(i + 1)}>{i + 1}</button>
-              </li>
-            ))}
-            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-              <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
-            </li>
-          </ul>
-        </nav>
-      </div>
 
 
     </div>

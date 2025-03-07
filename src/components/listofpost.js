@@ -155,6 +155,9 @@ const PostList = () => {
                    <Button variant="primary" size="sm"  href={`/post/${post.id}`}>
                                     Read More
                                   </Button>
+                                  <Button variant="success" size="sm"  href={`/attandance/${post.id}`}>
+                                    make attandance
+                                  </Button>
                 </td>
               </tr>
             ))}

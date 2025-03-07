@@ -229,7 +229,7 @@ useEffect(() => {
                   <div class="card-body">
                     <h5 class="card-title" >
                       <center>
-                      there is no user registered except you !
+                      there is no citizen registered!
                       </center>
                       </h5>
                     <p></p>

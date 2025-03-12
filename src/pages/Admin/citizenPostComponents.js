@@ -43,19 +43,19 @@ const CitizenPosts = () => {
                 <Card.Body>
                   <Card.Title>{post.title}</Card.Title>
                   <Card.Text>{post.description}</Card.Text>
-                  <p><strong>Status:</strong> <Badge bg="success">{post.status}</Badge></p>
+                  {/* <p><strong>Status:</strong> <Badge bg="success">{post.status}</Badge></p> */}
                   {post.attendances.length > 0 ? (
                     <p className="text-success fw-bold">
                       <CheckCircleFill className="me-1" /> You attended this meeting.
                     </p>
                   ) : post.penalties.length > 0 ? (
-                    post.penalties[0].status === "offered" ? (
+                    post.penalties[0].status === "un paid" ? (
                       <p className="text-danger fw-bold">
-                        <ExclamationCircleFill className="me-1" /> Penalty: {post.penalties[0].penarity} (Not yet accepted)
+                        <ExclamationCircleFill className="me-1" /> Penalty: {post.penalties[0].penarity} (Not yet paid)
                       </p>
                     ) : (
                       <p className="text-success fw-bold">
-                        <CheckCircleFill className="me-1" /> Penalty {post.penalties[0].penarity} accepted successfully!
+                        <CheckCircleFill className="me-1" /> Penalty {post.penalties[0].penarity} paid successfully!
                       </p>
                     )
                   ) : (

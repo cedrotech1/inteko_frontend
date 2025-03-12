@@ -17,6 +17,28 @@ const AttendancePage = () => {
   const [usersPerPage] = useState(5); // Number of users to display per page
   const token = localStorage.getItem("token");
 
+  const [amount, setAmount] = useState(null);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/fine/`, {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Assuming the response contains an array of fines
+        if (data && data.length > 0) {
+          setAmount(data[0].amount); // Set the first fine's amount
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching fine:', error);
+      });
+  }, []);
+
   useEffect(() => {
     // Fetch users
     fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/users`, {
@@ -266,7 +288,7 @@ const AttendancePage = () => {
               <th>User</th>
               <th>Penalty Description</th>
               <th>Status</th>
-              <th>Action</th>
+             
             </tr>
           </thead>
           <tbody>
@@ -277,23 +299,13 @@ const AttendancePage = () => {
                 <td>
                   <span
                     className={`badge ${
-                      penalty.status === "offered" ? "bg-danger" : "bg-success"
+                      penalty.status === "un paid" ? "bg-danger" : "bg-success"
                     }`}
                   >
                     {penalty.status.charAt(0).toUpperCase() + penalty.status.slice(1)}
                   </span>
                 </td>
-                <td>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => {
-                      setShowModal(true);
-                      setSelectedPenaltyID(penalty.id);
-                    }}
-                  >
-                    Update Status
-                  </button>
-                </td>
+               
               </tr>
             ))}
           </tbody>
@@ -305,10 +317,11 @@ const AttendancePage = () => {
         <h4>Add New Penalty:</h4>
         <Form>
           <Form.Group controlId="penaltyText">
-            <Form.Label>Penalty Description</Form.Label>
+            <Form.Label>Fine Description</Form.Label>
             <Form.Control
               type="text"
-              value={penaltyText}
+              value={amount ? `${amount} Rwf` : ''}
+              disabled
               onChange={(e) => setPenaltyText(e.target.value)}
               placeholder="Enter penalty description"
             />

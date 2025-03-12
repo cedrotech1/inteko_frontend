@@ -29,28 +29,36 @@ function Sidebar() {
       { label: "Dashboard", icon: "bi-bar-chart", link: "/statistics" },
       { label: "Add Leaders Users", icon: "bi-person-plus", link: "../addusers" },
       { label: "List of Leaders", icon: "bi-person-lines-fill", link: "../users" },
+      { label: "List of citizens", icon: "bi-person-lines-fill", link: "../citizens" },
       { label: "Manage Post Types", icon: "bi-tags", link: "../post_type" },
+      { label: "Report", icon: "bi-tags", link: "../report" },
       { label: "Notifications", icon: "bi-bell", link: "../notifications" },
+      { label: "Fines", icon: "bi-bell", link: "../fines" },
     ],
     province_leader: [
       { label: "View Posts", icon: "bi-file-earmark-text", link: "../post" },
+      { label: "Report", icon: "bi-tags", link: "../report" },
       { label: "Notifications", icon: "bi-bell", link: "../notifications" },
     ],
     district_leader: [
       { label: "View Posts", icon: "bi-file-earmark-text", link: "../post" },
+      { label: "Report", icon: "bi-tags", link: "../report" },
       { label: "Notifications", icon: "bi-bell", link: "../notifications" },
     ],
     sector_leader: [
       { label: "View Posts", icon: "bi-file-earmark-text", link: "../post" },
+      { label: "Report", icon: "bi-tags", link: "../report" },
       { label: "Notifications", icon: "bi-bell", link: "../notifications" },
     ],
     cell_leader: [
       { label: "View Posts", icon: "bi-file-earmark-text", link: "../post" },
+      { label: "Report", icon: "bi-tags", link: "../report" },
       { label: "Notifications", icon: "bi-bell", link: "../notifications" },
     ],
     village_leader: [
       { label: "Add Post", icon: "bi-pencil-square", link: "../addpost" },
       { label: "View Posts", icon: "bi-file-earmark-text", link: "../post" },
+      { label: "Report", icon: "bi-tags", link: "../report" },
       { label: "View Village Citizens", icon: "bi-person-badge", link: "../users" },
     ],
     citizen: [
